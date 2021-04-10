@@ -8,6 +8,6 @@ namespace LedgerCore.Domain.Models
         public UInt32 Serial { get; set; }
         public DateTime DateTime { get; set; }
         public string Note { get; set; }
-        public IEnumerable<Entry> Entries { get; set; }
+        public ICollection<Entry> Entries { get; set; }
     }
 }
