@@ -17,13 +17,12 @@ namespace LedgerCore.Application.Impl
         public LedgerAgent(IRepository repository)
         {
             _repository = repository;
-        }
 
-        public LedgerAgent(Guid ledgerId)
-        {
-            _ = SetLedgerByIdAsync(ledgerId).Result;
+
+            
 
         }
+
 
         public async Task<Ledger> CreateNewLedgerAsync(DateTime start, DateTime end, string title)
         {
@@ -53,6 +52,10 @@ namespace LedgerCore.Application.Impl
         public async Task<ILedgerAgent> SetLedgerByIdAsync(Guid id)
         {
 
+
+
+
+
             var l = await _repository.FindLedgerByIdAsync(id);
             if (l == null)
             {
@@ -80,24 +83,24 @@ namespace LedgerCore.Application.Impl
         }
 
 
-        public async Task<ILedgerAgent> OpenTransactionAsync(DateTime datetime, Guid ledgerId)
+        public ILedgerAgent OpenTransaction(DateTime datetime, Guid ledgerId)
         {
-            return await OpenTransactionAsync(datetime, "", ledgerId);
+            return  OpenTransaction(datetime, "", ledgerId);
         }
 
-        public async Task<ILedgerAgent> OpenTransactionAsync(DateTime datetime, string note = "")
+        public ILedgerAgent OpenTransaction(DateTime datetime, string note = "")
         {
-            return await OpenTransactionAsync(datetime, note, null);
+            return  OpenTransaction(datetime, note, null);
         }
 
-        public async Task<ILedgerAgent> OpenTransactionAsync(DateTime datetime, string note = "", Guid? ledgerId = null)
+        public ILedgerAgent OpenTransaction(DateTime datetime, string note = "", Guid? ledgerId = null)
         {
 
             try
             {
                 if (ledgerId.HasValue)
                 {
-                    _ = await SetLedgerByIdAsync(ledgerId.Value);
+                    _ =  SetLedgerByIdAsync(ledgerId.Value).Result;
                 }
                 _transaction = new Transaction()
                 {
@@ -126,17 +129,17 @@ namespace LedgerCore.Application.Impl
 
 
 
-        public async Task<ILedgerAgent> AddEntryAsync(decimal amount, Account account, EntryType entryType, string note = "")
+        public ILedgerAgent AddEntry(decimal amount, Account account, EntryType entryType, string note = "")
         {
-            return  await AddEntryAsync(amount, account.Id, entryType, note);
+            return   AddEntry(amount, account.Id, entryType, note);
         }
 
-        public async Task<ILedgerAgent> AddEntryAsync(decimal amount, uint accountId, EntryType entryType, string note = "")
+        public  ILedgerAgent AddEntry(decimal amount, uint accountId, EntryType entryType, string note = "")
         {
             if (_transaction != null)
             {
                 
-                var account = await _repository.FindAccountByIdAsync(accountId);
+                var account =  _repository.FindAccountByIdAsync(accountId).Result;
                 if (account == null)
                 {
                     throw new LedgerException($"Account <{accountId}> not found", ErrorCodes.AccountNotFound);
