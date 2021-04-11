@@ -17,9 +17,9 @@ namespace LedgerCore.Domain.Infras
 
         Task<Guid> UpdateTransactionAsync(Transaction transaction);
 
-        Task<bool> DeleteTransactionAsync(Guid Id);
+        Task<bool> DeleteTransactionAsync(Guid ledgerId, Guid id);
 
-        Task<IPagedEnumareable<Transaction>> GetTransactionsAsync(PaginationParams paginationParams);
+        Task<IPagedEnumareable<Transaction>> GetTransactionsAsync(Guid ledgerId, PaginationParams paginationParams);
 
         Task<Account> FindAccountByIdAsync(uint id);
         Task<Account> FindAccountByNameAsync(string name);
