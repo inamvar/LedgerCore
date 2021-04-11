@@ -9,7 +9,7 @@ namespace LedgerCore.Domain.Infras
 
     {
 
-        Task<Ledger> FindLedgerById(Guid id);
+        Task<Ledger> FindLedgerByIdAsync(Guid id);
         Task<Guid> CreateLedgerAsync(Ledger ledger);
         Task<Guid> UpdateLedgerAsync(Ledger ledger);
 
@@ -19,6 +19,15 @@ namespace LedgerCore.Domain.Infras
 
         Task<bool> DeleteTransactionAsync(Guid Id);
 
-        Task<IPagedEnumareable<Transaction>> GetTransactionsAsync(PaginationParams paginationParams); 
+        Task<IPagedEnumareable<Transaction>> GetTransactionsAsync(PaginationParams paginationParams);
+
+        Task<Account> FindAccountByIdAsync(uint id);
+        Task<Account> FindAccountByNameAsync(string name);
+        Task<uint> CreateAccountAsync(Account account);
+        Task<uint> UpdateAccountAsync(Account account);
+        Task<IPagedEnumareable<Account>> GetAccountsAsync(PaginationParams paginationParams);
+
+        Task<IPagedEnumareable<Account>> FindAccountsAsync(string filter, PaginationParams paginationParams);
+
     }
 }
