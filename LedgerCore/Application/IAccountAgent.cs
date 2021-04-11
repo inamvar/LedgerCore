@@ -9,7 +9,6 @@ namespace LedgerCore.Application
     {
         Task<uint> CreateAccountAsync(string accountName, uint accountId);
         Task<uint> CreateAccountAsync(string accountName, uint accountId, uint parentId);
-        Task<bool> Exists(uint id);
         Task<IPagedEnumareable<Account>> GetAll(int page = 1, int pageSize = 25);
         Task<decimal> GetBalanceAsync(uint accountId, Guid ledgerId);
     }

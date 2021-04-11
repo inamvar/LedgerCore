@@ -31,10 +31,6 @@ namespace LedgerCore.Application.Impl
             
         }
 
-        public Task<bool> Exists(uint id)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<IPagedEnumareable<Account>> GetAll(int page = 1, int pageSize = 25)
         {
