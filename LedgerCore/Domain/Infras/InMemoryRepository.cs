@@ -68,6 +68,23 @@ namespace LedgerCore.Domain.Infras
             return Task.FromResult(_ledgers.First<Ledger>(q => q.Id == id));
         }
 
+        public Task<decimal> GetAccountBalanceAsync(uint accountId, Guid ledgerId)
+        {
+            var ledger = _ledgers.First(q => q.Id == ledgerId);
+            if (ledger != null && ledger.Transactions != null)
+            {
+                var transactions =  ledger.Transactions.Where(q => q.Entries.Any(a => a.AccountId == accountId)).ToList();
+                var query = transactions.SelectMany(t => t.Entries);
+                var credits = query.Where(q=> q.EntryType == EntryType.CREDIT).Sum(s => (decimal?)s.Amount) ?? 0;
+                var debits = query.Where(q => q.EntryType == EntryType.DEBIT).Sum(s => (decimal?)s.Amount) ?? 0;
+                return Task.FromResult(credits - debits);
+            }
+            else
+            {
+                return Task.FromResult<decimal>(0);
+            }
+        }
+
         public Task<IPagedEnumareable<Account>> GetAccountsAsync(PaginationParams paginationParams)
         {
             return Task.FromResult(_accounts.ToPagedList(paginationParams));

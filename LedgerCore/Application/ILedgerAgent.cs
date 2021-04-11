@@ -18,5 +18,7 @@ namespace LedgerCore.Application
         Task<Transaction> CommitTransactionAsync();
         Transaction GetTransaction();
         Ledger GetLedger();
+
+
     }
 }

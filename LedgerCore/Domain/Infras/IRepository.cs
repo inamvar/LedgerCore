@@ -29,5 +29,7 @@ namespace LedgerCore.Domain.Infras
 
         Task<IPagedEnumareable<Account>> FindAccountsAsync(string filter, PaginationParams paginationParams);
 
+        Task<decimal> GetAccountBalanceAsync(uint accountId, Guid ledgerId);
+
     }
 }

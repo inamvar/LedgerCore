@@ -40,5 +40,10 @@ namespace LedgerCore.Application.Impl
         {
             throw new NotImplementedException();
         }
+
+        public async Task<decimal> GetBalanceAsync(uint accountId, Guid ledgerId)
+        {
+            return await _repository.GetAccountBalanceAsync(accountId, ledgerId);
+        }
     }
 }
