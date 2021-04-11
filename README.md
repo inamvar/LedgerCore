@@ -44,7 +44,12 @@ A chart of accounts is a list of the accounts codes that can be identified with 
                  .AddEntry( amount: 10000, accountId: 1101, EntryType.DEBIT, note: "some note")
                  .AddEntry( amount: 10000, accountId: 7101, EntryType.CREDIT, note: "some other note")
                  .CommitTransactionAsync();
-               
+            
+            // create new AccountAgent object. this is an implementaion of IAccountAgent (its better to iject it from IoC)
+            var accountAgent = new AccountAgent(repo);
+            
+            var balance = await accountAgent.GetBalanceAsync(1101, ledger.Id); // The `balance` value  for account number 1101 is -10000
+            
 
 ```
 
